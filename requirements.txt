@@ -1,0 +1,9 @@
+# Web framework
+Flask>=3.0,<4.0
+# Đọc biến môi trường từ file .env
+python-dotenv>=1.0
+# WSGI server cho production
+gunicorn>=21.0
+
+# Kiểm thử
+pytest>=8.0
