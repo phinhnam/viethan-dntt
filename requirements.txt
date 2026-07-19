@@ -1,0 +1,18 @@
+# Web framework & server
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.29
+gunicorn>=21.0
+
+# Database (PostgreSQL; SQLite dùng cho dev/test)
+SQLAlchemy>=2.0
+psycopg2-binary>=2.9
+
+# Cấu hình & tiện ích
+python-dotenv>=1.0
+itsdangerous>=2.1
+python-multipart>=0.0.9
+pydantic>=2.6
+
+# Kiểm thử
+pytest>=8.0
+httpx>=0.27

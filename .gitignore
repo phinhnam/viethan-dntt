@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Môi trường & dữ liệu cục bộ
+.env
+instance/
+dev.db
+*.db
+uploads/
+
+# Kiểm thử
+.pytest_cache/
+
+# Hệ điều hành / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

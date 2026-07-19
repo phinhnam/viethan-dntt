@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Kế toán - Danh sách phiếu đề nghị thanh toán{% endblock %}
+{% block content %}
+<div class="paper wide">
+  <h1 class="list-title">KẾ TOÁN - DANH SÁCH PHIẾU ĐỀ NGHỊ THANH TOÁN / HOÀN ỨNG</h1>
+
+  <div class="filters no-print">
+    <input type="search" id="filter-q" placeholder="Tìm số phiếu, người đề nghị, nội dung...">
+    <select id="filter-dept"><option value="">Tất cả bộ phận</option></select>
+    <input type="month" id="filter-month" title="Lọc theo tháng của số phiếu">
+    <button type="button" id="btn-filter" class="btn primary">Lọc</button>
+    <button type="button" id="btn-clear" class="btn">Xóa lọc</button>
+  </div>
+
+  <table class="grid" id="req-table">
+    <thead>
+      <tr>
+        <th>Số phiếu</th>
+        <th>Ngày lập</th>
+        <th>Bộ phận</th>
+        <th>Người đề nghị</th>
+        <th>Nội dung</th>
+        <th class="col-money">Tổng thanh toán</th>
+        <th class="col-stt">Chứng từ</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <p id="list-status" class="muted"></p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/format.js"></script>
+<script src="/static/js/list.js"></script>
+{% endblock %}
