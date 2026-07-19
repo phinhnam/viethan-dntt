@@ -6,13 +6,14 @@ from fastapi.staticfiles import StaticFiles
 
 from .config import settings
 from .database import Base, SessionLocal, engine
-from .seed import seed_defaults
+from .seed import migrate_columns, seed_defaults
 
 
 def create_app() -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         Base.metadata.create_all(bind=engine)
+        migrate_columns(engine)
         with SessionLocal() as db:
             seed_defaults(db)
             db.commit()

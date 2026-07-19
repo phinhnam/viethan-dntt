@@ -61,7 +61,10 @@ class PaymentRequest(Base):
     department_id: Mapped[int] = mapped_column(ForeignKey("departments.id"))
     request_date: Mapped[date] = mapped_column(Date)
     requester_name: Mapped[str] = mapped_column(String(120))
+    # Nội dung = "Đề nghị thanh toán cho đơn vị/cá nhân" trên biểu mẫu
     content: Mapped[str] = mapped_column(Text, default="")
+    recipient: Mapped[str] = mapped_column(String(200), default="Ban Tổng Giám Đốc")
+    bank_account: Mapped[str] = mapped_column(String(200), default="")
 
     # Số tiền lưu bằng VND nguyên (không lẻ)
     advance_amount: Mapped[int] = mapped_column(BigInteger, default=0)

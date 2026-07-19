@@ -1,134 +1,163 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="paper" id="form-root">
-  <div class="form-head">
-    <div class="logo-box">
-      <img id="logo-img" src="/static/img/viet-han.svg" alt="Logo Việt Hàn">
-      <select id="logo-select" class="no-print" title="Chọn logo công ty">
-        <option value="viet-han">Việt Hàn</option>
-        <option value="viet-han-cnc">Việt Hàn CNC</option>
-      </select>
-    </div>
-    <div class="company">
-      <div class="company-name" id="company-name">CÔNG TY VIỆT HÀN</div>
-      <div class="form-title">ĐỀ NGHỊ THANH TOÁN / HOÀN ỨNG</div>
-    </div>
-    <div class="form-code">
-      <div>Mã biểu mẫu</div>
-      <strong>TCKT-DNTT-BM01</strong>
-    </div>
+<div class="sheet">
+  <div class="page-actions no-print">
+    <button type="button" id="btn-save" class="btn outline">Lấy số quy định</button>
+    <button type="button" id="btn-print" class="btn primary">In / Xuất PDF</button>
   </div>
 
-  <div class="meta-grid">
-    <label>Số phiếu
-      <span id="doc-number" class="doc-number">(tự cấp khi lưu)</span>
-    </label>
-    <label>Ngày lập
-      <input type="date" id="request-date">
-    </label>
-    <label>Bộ phận
-      <select id="department"><option value="">-- Chọn bộ phận --</option></select>
-    </label>
-    <label>Người đề nghị
-      <input type="text" id="requester-name" placeholder="Họ và tên người đề nghị">
-    </label>
-    <label class="span-2">Nội dung đề nghị
-      <textarea id="content" rows="2" placeholder="Diễn giải nội dung thanh toán / hoàn ứng"></textarea>
-    </label>
-  </div>
+  <div class="paper form-vh">
+    <table class="head-table">
+      <tr>
+        <td class="head-logo">
+          <img id="logo-img" src="/static/img/viet-han.svg" alt="Logo Việt Hàn">
+          <select id="logo-select" class="no-print" title="Chọn logo công ty">
+            <option value="viet-han">Việt Hàn</option>
+            <option value="viet-han-cnc">Việt Hàn CNC</option>
+          </select>
+        </td>
+        <td class="head-title">ĐỀ NGHỊ THANH TOÁN /<br>HOÀN ỨNG</td>
+        <td class="head-code">
+          <strong>TCKT-DNTT-BM01</strong>
+          <span>Ban hành: 17-7-2023</span>
+        </td>
+      </tr>
+    </table>
 
-  <h2>I. Bảng kê công nợ</h2>
-  <table class="grid" id="debt-table">
-    <thead>
-      <tr>
-        <th class="col-stt">STT</th>
-        <th>Diễn giải</th>
-        <th class="col-md">Số hóa đơn</th>
-        <th class="col-md">Ngày HĐ</th>
-        <th class="col-money">Số tiền (VND)</th>
-        <th class="col-md">Ghi chú</th>
-        <th class="col-del no-print"></th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-    <tfoot>
-      <tr>
-        <td colspan="4" class="tright"><strong>Tổng công nợ</strong></td>
-        <td class="tright"><strong id="debt-total">0</strong></td>
-        <td></td><td class="no-print"></td>
-      </tr>
-    </tfoot>
-  </table>
-  <button type="button" class="btn-add no-print" data-add="debt">+ Thêm dòng công nợ</button>
-
-  <h2>II. Chi tiết thanh toán</h2>
-  <table class="grid" id="payment-table">
-    <thead>
-      <tr>
-        <th class="col-stt">STT</th>
-        <th>Nội dung thanh toán</th>
-        <th class="col-money">Số tiền (VND)</th>
-        <th class="col-md">Ghi chú</th>
-        <th class="col-del no-print"></th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-    <tfoot>
-      <tr>
-        <td colspan="2" class="tright"><strong>Tổng đề nghị thanh toán</strong></td>
-        <td class="tright"><strong id="payment-total">0</strong></td>
-        <td></td><td class="no-print"></td>
-      </tr>
-    </tfoot>
-  </table>
-  <button type="button" class="btn-add no-print" data-add="payment">+ Thêm dòng thanh toán</button>
-
-  <div class="summary">
-    <div class="summary-row">
-      <span>Số tiền đã tạm ứng</span>
-      <input type="text" id="advance" class="money tright" value="0">
+    <div class="meta">
+      <div class="meta-row">
+        <label class="w60">Kính gửi:&nbsp;<input id="recipient" class="dotted" value="Ban Tổng Giám Đốc"></label>
+        <label class="w40">Số:&nbsp;<span id="doc-number" class="dotted doc-number">&nbsp;</span></label>
+      </div>
+      <div class="meta-row">
+        <label class="w60">Người đề nghị:&nbsp;<input id="requester-name" class="dotted"></label>
+        <label class="w40">Ngày:&nbsp;<input type="date" id="request-date" class="dotted"></label>
+      </div>
+      <div class="meta-row">
+        <label class="w60">Đề nghị thanh toán cho đơn vị/ cá nhân:&nbsp;<input id="content" class="dotted"></label>
+        <label class="w40">Bộ phận:&nbsp;<select id="department" class="dotted"><option value="">-- chọn bộ phận --</option></select></label>
+      </div>
+      <div class="meta-row">
+        <label class="w60">Số tài khoản / Ngân hàng:&nbsp;<input id="bank-account" class="dotted" placeholder="Số TK - Tên ngân hàng - Chi nhánh"></label>
+      </div>
     </div>
-    <div class="summary-row">
-      <span id="final-label">Số tiền đề nghị thanh toán</span>
-      <strong id="final-amount" class="tright">0</strong>
+
+    <p class="sec">I. Thông tin công nợ của nhà cung cấp/cá nhân thanh toán, hoàn ứng:</p>
+    <table class="grid" id="debt-table">
+      <thead>
+        <tr>
+          <th class="col-label">Chi tiết</th>
+          <th>Phát sinh trong kỳ</th>
+          <th>Đã thanh toán trong kỳ</th>
+          <th>Số dư cuối kỳ chưa thanh toán</th>
+          <th>Công nợ quá hạn</th>
+          <th>Hạn mức công nợ</th>
+          <th>Thời gian quá hạn (ngày)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-label">Số dư đầu kỳ</td>
+          <td><input class="money tright" data-row="dau_ky" data-col="ps"></td>
+          <td><input class="money tright" data-row="dau_ky" data-col="tt"></td>
+          <td><input class="money tright" data-row="dau_ky" data-col="ck"></td>
+          <td><input class="money tright" data-row="dau_ky" data-col="qh"></td>
+          <td><input class="money tright" data-row="dau_ky" data-col="hm"></td>
+          <td><input class="num tcenter" data-row="dau_ky" data-col="tg"></td>
+        </tr>
+        <tr>
+          <td class="col-label">Giá trị thực hiện</td>
+          <td><input class="money tright" data-row="thuc_hien" data-col="ps"></td>
+          <td><input class="money tright" data-row="thuc_hien" data-col="tt"></td>
+          <td><input class="money tright" data-row="thuc_hien" data-col="ck"></td>
+          <td><input class="money tright" data-row="thuc_hien" data-col="qh"></td>
+          <td><input class="money tright" data-row="thuc_hien" data-col="hm"></td>
+          <td><input class="num tcenter" data-row="thuc_hien" data-col="tg"></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td class="col-label"><strong>Tổng cộng</strong></td>
+          <td class="tright" data-total="ps">-</td>
+          <td class="tright" data-total="tt">-</td>
+          <td class="tright" data-total="ck">-</td>
+          <td class="tright" data-total="qh">-</td>
+          <td class="tright" data-total="hm">-</td>
+          <td class="tcenter">-</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <p class="sec">II. Đề nghị thanh toán số tiền cụ thể như sau:</p>
+    <table class="grid" id="payment-table">
+      <thead>
+        <tr>
+          <th class="col-stt">STT</th>
+          <th>Nội dung</th>
+          <th class="col-bp">BP chịu chi phí</th>
+          <th class="col-money">Giá trị thực hiện/ Tạm ứng</th>
+          <th class="col-money">Đã thanh toán/ Hoàn ứng</th>
+          <th class="col-money">Số tiền hoàn ứng</th>
+          <th class="col-money">Số tiền thanh toán</th>
+          <th class="col-money">Giá trị còn lại</th>
+          <th class="col-note">Ghi chú</th>
+          <th class="col-del no-print"></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3" class="tcenter"><strong>Tổng cộng</strong></td>
+          <td class="tright" data-ptotal="gt">0</td>
+          <td class="tright" data-ptotal="da">0</td>
+          <td class="tright" data-ptotal="refund">-</td>
+          <td class="tright" data-ptotal="pay">-</td>
+          <td class="tright" data-ptotal="remain">0</td>
+          <td></td>
+          <td class="no-print"></td>
+        </tr>
+      </tfoot>
+    </table>
+    <button type="button" class="btn-add no-print" data-add="payment">+ Thêm dòng nội dung</button>
+
+    <div class="words-row">Số tiền bằng chữ:&nbsp;<em id="amount-words" class="dotted-grow">&nbsp;</em></div>
+
+    <div id="dropzone" class="attach-box no-print">
+      <span class="attach-label">Chứng từ kèm theo:</span>
+      <span id="type-chips"></span>
+      <div class="hint">
+        Tiền tố tên file: <b>TT-</b> (Tờ trình), <b>BG-</b> (Báo giá), <b>NT-</b> (Nghiệm thu),
+        <b>HD-</b> (Hóa đơn), <b>HDKT-/HĐ-</b> (Hợp đồng) — bấm nút loại chứng từ hoặc kéo-thả file vào khung này
+      </div>
+      <input type="file" id="file-input" multiple hidden>
     </div>
-    <div class="summary-row words">
-      <span>Bằng chữ</span>
-      <em id="amount-words">Không đồng</em>
-    </div>
-  </div>
+    <table class="grid" id="attach-table">
+      <thead>
+        <tr>
+          <th class="col-stt">STT</th>
+          <th class="col-bp">Loại chứng từ</th>
+          <th>Tên file</th>
+          <th class="col-bp">Kích thước</th>
+          <th class="col-del no-print"></th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
 
-  <h2>III. Chứng từ đính kèm</h2>
-  <div id="dropzone" class="no-print">
-    Kéo-thả file chứng từ vào đây (hoặc bấm để chọn file).<br>
-    <small>Tự phân loại theo tiền tố tên file: <b>TT-</b> Tờ trình, <b>HD-</b> Hóa đơn,
-    <b>BG-</b>/<b>QUOTE</b> Báo giá, <b>DNTT-</b> Đề nghị thanh toán.</small>
-    <input type="file" id="file-input" multiple hidden>
-  </div>
-  <table class="grid" id="attach-table">
-    <thead>
-      <tr>
-        <th class="col-stt">STT</th>
-        <th class="col-md">Loại chứng từ</th>
-        <th>Tên file</th>
-        <th class="col-md">Kích thước</th>
-        <th class="col-del no-print"></th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <div class="signatures">
-    <div><strong>Người đề nghị</strong><span>(Ký, họ tên)</span></div>
-    <div><strong>Trưởng bộ phận</strong><span>(Ký, họ tên)</span></div>
-    <div><strong>Kế toán trưởng</strong><span>(Ký, họ tên)</span></div>
-    <div><strong>Giám đốc</strong><span>(Ký, duyệt)</span></div>
-  </div>
-
-  <div class="actions no-print">
-    <button type="button" id="btn-save" class="btn primary">💾 Lưu phiếu</button>
-    <button type="button" id="btn-print" class="btn">🖨 In / Xuất PDF</button>
-    <a href="/" class="btn">✚ Phiếu mới</a>
+    <table class="grid sig-table">
+      <thead>
+        <tr>
+          <th>Trưởng đơn vị</th>
+          <th>Kế toán trưởng</th>
+          <th>P.TGĐ Phụ trách</th>
+          <th>Tổng Giám Đốc</th>
+          <th>CT HĐQT/Người được ủy quyền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="sig-space"><td></td><td></td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
   </div>
 </div>
 {% endblock %}

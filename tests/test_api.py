@@ -14,9 +14,11 @@ def test_catalogs_seeded(client):
 
     types = client.get("/api/doc-types").json()
     prefixes = {t["prefix"] for t in types}
-    assert {"TT", "HD", "BG", "DNTT", "KHAC"} <= prefixes
+    assert {"TT", "BG", "NT", "HD", "HDKT", "DNTT", "KHAC"} <= prefixes
     bg = next(t for t in types if t["prefix"] == "BG")
     assert "QUOTE" in bg["aliases"]
+    hdkt = next(t for t in types if t["prefix"] == "HDKT")
+    assert "HĐ" in hdkt["aliases"]
 
 
 def _dept_id(client, code):

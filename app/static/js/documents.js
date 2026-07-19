@@ -1,10 +1,12 @@
-// Chứng từ đính kèm: kéo-thả file, nhận diện loại theo tiền tố tên file
-// (TT- Tờ trình, HD- Hóa đơn, BG-/QUOTE Báo giá, DNTT- Đề nghị thanh toán).
+// Chứng từ kèm theo: bấm nút loại chứng từ hoặc kéo-thả file,
+// nhận diện loại theo tiền tố tên file: TT- (Tờ trình), BG- (Báo giá),
+// NT- (Nghiệm thu), HD- (Hóa đơn), HDKT-/HĐ- (Hợp đồng).
 (function () {
   const state = {
-    docTypes: [],   // [{prefix, name, aliases:[]}]
-    pending: [],    // file chưa upload: {file, prefix}
-    saved: [],      // chứng từ đã lưu trên server (khi mở lại phiếu)
+    docTypes: [],       // [{prefix, name, aliases:[]}]
+    pending: [],        // file chưa upload: {file, prefix}
+    saved: [],          // chứng từ đã lưu trên server (khi mở lại phiếu)
+    chipPrefix: null,   // loại đang chọn khi bấm chip
   };
 
   function detectPrefix(filename) {
@@ -26,6 +28,22 @@
       .map((t) => `<option value="${t.prefix}" ${t.prefix === prefix ? 'selected' : ''}>${t.name}</option>`)
       .join('');
     return `<select class="attach-type no-print">${options}</select><span class="print-only">${typeName(prefix)}</span>`;
+  }
+
+  function renderChips() {
+    const box = document.getElementById('type-chips');
+    if (!box) return;
+    box.innerHTML = '';
+    state.docTypes
+      .filter((t) => t.prefix !== 'KHAC' && t.prefix !== 'DNTT')
+      .forEach((t) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'chip';
+        btn.textContent = t.name;
+        btn.dataset.prefix = t.prefix;
+        box.appendChild(btn);
+      });
   }
 
   function render() {
@@ -57,11 +75,17 @@
         <td class="col-del no-print"><button type="button" class="btn-del" data-pending-id="${i}" title="Bỏ file">✕</button></td>`;
       tb.appendChild(tr);
     });
+
+    // Ẩn bảng khi chưa có chứng từ nào
+    document.getElementById('attach-table').style.display = stt ? '' : 'none';
   }
 
-  function addFiles(fileList) {
+  function addFiles(fileList, forcedPrefix) {
     [...fileList].forEach((file) => {
-      state.pending.push({ file, prefix: detectPrefix(file.name) });
+      state.pending.push({
+        file,
+        prefix: forcedPrefix || detectPrefix(file.name),
+      });
     });
     render();
   }
@@ -70,8 +94,16 @@
     const dropzone = document.getElementById('dropzone');
     const input = document.getElementById('file-input');
 
-    dropzone.addEventListener('click', () => input.click());
-    input.addEventListener('change', () => { addFiles(input.files); input.value = ''; });
+    dropzone.addEventListener('click', (e) => {
+      const chip = e.target.closest('.chip');
+      state.chipPrefix = chip ? chip.dataset.prefix : null;
+      input.click();
+    });
+    input.addEventListener('change', () => {
+      addFiles(input.files, state.chipPrefix);
+      state.chipPrefix = null;
+      input.value = '';
+    });
     ['dragover', 'dragenter'].forEach((ev) => dropzone.addEventListener(ev, (e) => {
       e.preventDefault();
       dropzone.classList.add('dragover');
@@ -102,12 +134,17 @@
         render();
       }
     });
+
+    render();
   });
 
   window.docs = {
     state,
     render,
-    setDocTypes(types) { state.docTypes = types; },
+    setDocTypes(types) {
+      state.docTypes = types;
+      renderChips();
+    },
     setSaved(list) { state.saved = list; render(); },
     async uploadPending(requestId) {
       while (state.pending.length > 0) {

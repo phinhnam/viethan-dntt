@@ -24,6 +24,8 @@ class RequestIn(BaseModel):
     request_date: date
     requester_name: str = Field(min_length=1, max_length=120)
     content: str = ""
+    recipient: str = "Ban Tổng Giám Đốc"
+    bank_account: str = ""
     advance_amount: int = 0
     total_debt: int = 0
     total_payment: int = 0
@@ -60,6 +62,8 @@ def _request_out(r: PaymentRequest, full: bool = False) -> dict:
     }
     if full:
         out.update(
+            recipient=r.recipient,
+            bank_account=r.bank_account,
             advance_amount=r.advance_amount,
             total_debt=r.total_debt,
             amount_in_words=r.amount_in_words,
@@ -124,6 +128,8 @@ def create_request(body: RequestIn, db: Session = Depends(get_db)):
         request_date=body.request_date,
         requester_name=body.requester_name.strip(),
         content=body.content.strip(),
+        recipient=body.recipient.strip(),
+        bank_account=body.bank_account.strip(),
         advance_amount=body.advance_amount,
         total_debt=body.total_debt,
         total_payment=body.total_payment,
@@ -151,6 +157,8 @@ def update_request(req_id: int, body: RequestIn, db: Session = Depends(get_db)):
     req.request_date = body.request_date
     req.requester_name = body.requester_name.strip()
     req.content = body.content.strip()
+    req.recipient = body.recipient.strip()
+    req.bank_account = body.bank_account.strip()
     req.advance_amount = body.advance_amount
     req.total_debt = body.total_debt
     req.total_payment = body.total_payment
