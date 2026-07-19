@@ -1,0 +1,194 @@
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  color: #1c2733;
+  background: #eef1f5;
+}
+
+/* ---------- Thanh điều hướng ---------- */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
+  background: #123c6d;
+  color: #fff;
+}
+.topbar-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.topbar-brand img { height: 32px; background: #fff; border-radius: 4px; padding: 2px; }
+.topbar nav a {
+  color: #dce8f7;
+  text-decoration: none;
+  margin-left: 18px;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+.topbar nav a:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
+
+/* ---------- Khổ giấy ---------- */
+main { display: flex; justify-content: center; padding: 20px 10px 60px; }
+.paper {
+  background: #fff;
+  width: 210mm;
+  max-width: 100%;
+  padding: 14mm 12mm;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+.paper.wide { width: 280mm; }
+
+/* ---------- Đầu biểu mẫu ---------- */
+.form-head {
+  display: grid;
+  grid-template-columns: 130px 1fr 130px;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 2px solid #123c6d;
+  padding-bottom: 8px;
+}
+.logo-box { display: flex; flex-direction: column; gap: 6px; }
+.logo-box img { width: 110px; height: auto; }
+.company { text-align: center; }
+.company-name { font-weight: 700; font-size: 16px; }
+.form-title { font-weight: 700; font-size: 20px; margin-top: 6px; color: #123c6d; }
+.form-code { text-align: center; font-size: 12px; border: 1px solid #999; padding: 6px 4px; }
+
+/* ---------- Thông tin chung ---------- */
+.meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+  margin: 14px 0;
+}
+.meta-grid label { display: flex; flex-direction: column; gap: 4px; font-weight: 600; }
+.meta-grid .span-2 { grid-column: 1 / -1; }
+.doc-number { font-weight: 700; color: #b02a2a; font-size: 15px; }
+
+input, select, textarea {
+  font: inherit;
+  padding: 6px 8px;
+  border: 1px solid #b8c2cf;
+  border-radius: 4px;
+  width: 100%;
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid #3c78c5; border-color: #3c78c5; }
+
+h1.list-title { font-size: 18px; color: #123c6d; text-align: center; }
+h2 { font-size: 15px; color: #123c6d; margin: 18px 0 6px; text-transform: uppercase; }
+
+/* ---------- Bảng ---------- */
+table.grid { width: 100%; border-collapse: collapse; }
+table.grid th, table.grid td { border: 1px solid #9aa7b5; padding: 4px 6px; vertical-align: middle; }
+table.grid th { background: #e8eef6; font-size: 13px; }
+table.grid td input { border: none; border-radius: 0; padding: 4px; background: transparent; }
+table.grid td input:focus { outline: 2px solid #3c78c5; }
+.col-stt { width: 42px; text-align: center; }
+.col-md { width: 120px; }
+.col-money { width: 140px; }
+.col-del { width: 34px; text-align: center; }
+.tright { text-align: right; }
+.tcenter { text-align: center; }
+.ellipsis { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.btn-add {
+  margin: 6px 0 4px;
+  border: 1px dashed #3c78c5;
+  color: #3c78c5;
+  background: #f4f8fd;
+  border-radius: 4px;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+.btn-del {
+  border: none;
+  background: transparent;
+  color: #b02a2a;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* ---------- Tổng hợp ---------- */
+.summary { margin-top: 14px; border: 1px solid #9aa7b5; padding: 10px 14px; }
+.summary-row {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 12px;
+  align-items: center;
+  padding: 4px 0;
+}
+.summary-row.words { grid-template-columns: 90px 1fr; }
+.summary-row strong { font-size: 16px; color: #b02a2a; }
+.summary-row em { font-style: italic; }
+
+/* ---------- Chứng từ ---------- */
+#dropzone {
+  border: 2px dashed #3c78c5;
+  border-radius: 6px;
+  background: #f4f8fd;
+  color: #2b5687;
+  text-align: center;
+  padding: 22px 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+#dropzone.dragover { background: #dcebfb; border-style: solid; }
+.badge {
+  background: #f0ad4e;
+  color: #fff;
+  font-size: 11px;
+  border-radius: 8px;
+  padding: 1px 8px;
+}
+
+/* ---------- Chữ ký ---------- */
+.signatures {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  gap: 8px;
+  margin-top: 26px;
+}
+.signatures div { display: flex; flex-direction: column; gap: 2px; padding-bottom: 70px; }
+.signatures span { font-size: 12px; font-style: italic; color: #555; }
+
+/* ---------- Nút & lọc ---------- */
+.actions { display: flex; gap: 10px; margin-top: 20px; }
+.btn {
+  display: inline-block;
+  border: 1px solid #b8c2cf;
+  background: #f7f9fb;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  color: #1c2733;
+  font: inherit;
+}
+.btn.primary { background: #123c6d; border-color: #123c6d; color: #fff; }
+.btn:hover { filter: brightness(1.08); }
+.btn:disabled { opacity: 0.6; cursor: wait; }
+
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 12px 0 16px;
+}
+.filters input[type="search"] { flex: 1; min-width: 220px; }
+.filters select, .filters input[type="month"] { width: auto; }
+.muted { color: #667; font-size: 13px; }
+.print-only { display: none; }
+
+/* ---------- In / Xuất PDF ---------- */
+@page { size: A4; margin: 10mm; }
+@media print {
+  body { background: #fff; }
+  .no-print { display: none !important; }
+  .print-only { display: inline; }
+  main { padding: 0; }
+  .paper { width: 100%; box-shadow: none; padding: 0; }
+  input, select, textarea { border: none; }
+  table.grid th { background: #eee !important; }
+  #attach-table a { color: inherit; text-decoration: none; }
+}

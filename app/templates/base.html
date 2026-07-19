@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Đề nghị thanh toán / Hoàn ứng - Việt Hàn{% endblock %}</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <header class="topbar no-print">
+    <div class="topbar-brand">
+      <img id="topbar-logo" src="/static/img/viet-han.svg" alt="logo">
+      <span>Đề nghị thanh toán / Hoàn ứng</span>
+    </div>
+    <nav>
+      <a href="/">Lập phiếu</a>
+      <a href="/ketoan">Kế toán - Danh sách phiếu</a>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <script src="/static/js/api.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
